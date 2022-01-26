@@ -34,7 +34,10 @@
         <p v-if="state.hasError" class="text-lg text-center text-gray-800 font-regular">
           Aconteceu um erro ao carregar os feedbacks 😓
         </p>
-        <p v-if="!state.feedbacks.length && !state.isLoading" class="text-lg text-center text-gray-800 font-regular">
+        <p
+          v-if="!state.feedbacks.length && !state.isLoading && !state.isLoadingFeedbacks && !state.hasError"
+          class="text-lg text-center text-gray-800 font-regular"
+        >
           Ainda nenhum feedback recebido 🤓
         </p>
 
@@ -47,13 +50,14 @@
           :feedback="feedback"
           class="mb-8"
         />
+        <feedback-card-loading v-if="state.isLoadingMoreFeedbacks" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { reactive, onMounted } from 'vue'
+import { reactive, onMounted, onUnmounted, onErrorCaptured } from 'vue'
 import services from '@/services'
 import Filters from './Filters'
 import FiltersLoading from './FiltersLoading'
@@ -73,6 +77,7 @@ export default {
     const state = reactive({
       isLoading: false,
       isLoadingFeedbacks: false,
+      isLoadingMoreFeedbacks: false,
       feedbacks: [],
       currentFeedbackType: '',
       pagination: {
@@ -83,13 +88,51 @@ export default {
       hasError: false
     })
 
+    onErrorCaptured(handleErrors)
+
     onMounted(() => {
       fetchFeedbacks()
+      window.addEventListener('scroll', handleScroll, false)
+    })
+
+    onUnmounted(() => {
+      window.removeEventListener('scroll', handleScroll, false)
     })
 
     function handleErrors (error) {
       state.isLoading = false
+      state.isLoadingFeedbacks = false
+      state.isLoadingMoreFeedbacks = false
       state.hasError = !!error
+    }
+
+    async function handleScroll () {
+      const isBottomOfWindow = Math.ceil(
+        document.documentElement.scrollTop + window.innerHeight
+      ) >= document.documentElement.scrollHeight
+
+      if (state.isLoading || state.isLoadingMoreFeedbacks) return
+      if (!isBottomOfWindow) return
+      if (state.feedbacks.length >= state.pagination.total) return
+
+      try {
+        state.isLoadingMoreFeedbacks = true
+        const { data } = await services.feedbacks.getAll({
+          ...state.pagination,
+          type: state.currentFeedbackType,
+          offset: (state.pagination.offset + 5)
+        })
+
+        if (data.results.length) {
+          state.feedbacks.push(...data.results)
+        }
+
+        state.isLoadingMoreFeedbacks = false
+        state.pagination = data.pagination
+      } catch (error) {
+        state.isLoadingMoreFeedbacks = false
+        handleErrors(error)
+      }
     }
 
     async function changeFeedbacksType (type) {
