@@ -119,7 +119,6 @@ export default {
 
         state.isLoading = false
       } catch (error) {
-        console.log(error)
         handleError(error)
       }
     }
