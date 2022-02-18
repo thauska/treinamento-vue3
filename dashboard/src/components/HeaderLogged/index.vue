@@ -18,6 +18,7 @@
           Feedbacks
         </li>
         <li
+          id="logout-button"
           @click="handleLogout"
           class="px-6 py-2 ml-2 font-bold bg-white rounded-full text-brand-main text-center cursor-pointer focus:outline-none"
         >
@@ -32,6 +33,7 @@
 import { useRouter } from 'vue-router'
 import { computed } from 'vue'
 import useStore from '@/hooks/useStore'
+import { cleanCurrentUser } from '@/store/user'
 
 export default {
   setup () {
@@ -39,19 +41,17 @@ export default {
     const store = useStore('User')
 
     const logoutlabel = computed(() => {
-      const nome = store.currentUser.name
 
-      if (!nome) {
+      if (!store.currentUser.name) {
         return '...'
       }
 
-      const primeiroNome = nome.substring(0, nome.indexOf(' '))
-
-      return `${primeiroNome} (sair)`
+      return `${store.currentUser.name} (sair)`
     })
 
     function handleLogout () {
       window.localStorage.removeItem('token')
+      cleanCurrentUser()
       router.push({ name: 'Home' })
     }
 
@@ -63,7 +63,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>
