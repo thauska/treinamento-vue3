@@ -32,7 +32,7 @@
         <span v-if="state.hasError" class="text-brand-danger">
           Erro ao carregar a apiKey
         </span>
-        <span v-else> {{ store.User.currentUser.apiKey }} </span>
+        <span id="apikey" v-else> {{ store.User.currentUser.apiKey }} </span>
         <div class="flex" v-if="!state.hasError">
           <icon
             @click="handleCopy"
@@ -42,6 +42,7 @@
             class="cursor-pointer mr-2"
           />
           <icon
+            id="generate-apikey"
             @click="handleGenerateApikey"
             name="loading"
             :color="brandColors.graydark"
