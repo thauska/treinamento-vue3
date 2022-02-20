@@ -41,7 +41,6 @@ export default {
     const store = useStore('User')
 
     const logoutlabel = computed(() => {
-
       if (!store.currentUser.name) {
         return '...'
       }

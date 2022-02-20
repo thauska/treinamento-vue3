@@ -12,7 +12,7 @@ export function resetUserStore () {
   state = reactive(userInitialState)
 }
 
-export function clearCurrentUser () {
+export function cleanCurrentUser () {
   state.currentUser = {}
 }
 
