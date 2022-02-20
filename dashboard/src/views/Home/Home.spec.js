@@ -1,4 +1,4 @@
-import Home from '.'
+import Home from './Index.vue'
 import { shallowMount } from '@vue/test-utils'
 import { routes } from '../../router'
 
