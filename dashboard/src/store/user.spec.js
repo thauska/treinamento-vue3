@@ -1,7 +1,7 @@
 import useStore from '@/hooks/useStore'
 
 import {
-  clearCurrentUser,
+  cleanCurrentUser,
   resetUserStore,
   setApiKey,
   setCurrentUser
@@ -27,7 +27,7 @@ describe('UserStore', () => {
     const store = useStore()
     setCurrentUser({ name: 'Thayana' })
     expect(store.User.currentUser.name).toBe('Thayana')
-    clearCurrentUser()
+    cleanCurrentUser()
     expect(store.User.currentUser.name).toBeFalsy()
   })
 })
