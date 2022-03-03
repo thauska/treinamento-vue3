@@ -1,13 +1,17 @@
 import axios from 'axios'
 
-const API_ENVS = {
+type tApiEnvs = {
+  [key: string]: string
+}
+
+const API_ENVS: tApiEnvs = {
   production: 'https://backend-treinamento-vue3-thauska.vercel.app/',
   development: '',
   local: 'http://localhost:3000'
 }
 
 const httpClient = axios.create({
-  baseURL: 'http://localhost:3000'
+  baseURL: API_ENVS[process.env.NODE_ENV] || API_ENVS.local
 })
 
 httpClient.interceptors.response.use((response) => {
