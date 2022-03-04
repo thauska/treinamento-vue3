@@ -30,7 +30,7 @@
         <icon name="close" size="14" :color="colors.gray['800']" />
       </button>
     </div>
-    wizard
+    <Wizard />
     <div
       v-if="canShowAdditionalControlAndInfo"
       class="text-gray-800 text-sm flex"
@@ -44,24 +44,32 @@
 <script lang="ts">
 import { defineComponent, computed, ComputedRef, SetupContext } from 'vue'
 import { brand } from '../../../palette'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import colors from 'tailwindcss/colors'
 import useStore from '@/hooks/store'
 import Icon from '../../components/Icon/index.vue'
+import Wizard from '../../components/Wizard/index.vue'
+import useNavigation, { Navigation } from '@/hooks/navigation'
 
 interface SetupReturn {
   emit: SetupContext['emit'];
+  back: Navigation['back'];
   canGoBack: ComputedRef<boolean>;
   label: ComputedRef<string>;
   canShowAdditionalControlAndInfo: ComputedRef<boolean>;
   brandColors: Record<string, string>;
-  colors: Record<string, any>;
+  colors: Record<string, string>;
 }
 
 export default defineComponent({
-  components: { Icon },
+  components: { Icon, Wizard },
   emits: ['close-box'],
   setup (_, { emit }: SetupContext): SetupReturn {
     const store = useStore()
+
+    const { back } = useNavigation()
+
     const label = computed<string>(() => {
       if (store.feedbackType === 'ISSUE') {
         return 'Reporte um problema'
@@ -85,6 +93,7 @@ export default defineComponent({
       brandColors: brand,
       emit,
       label,
+      back,
       canGoBack,
       canShowAdditionalControlAndInfo
     }
