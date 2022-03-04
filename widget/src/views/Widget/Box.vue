@@ -9,7 +9,7 @@
     >
       <button
         v-if="canShowAdditionalControlAndInfo"
-        @click="() => ({})"
+        @click="back"
         :disabled="canGoBack"
         :class="{ invisible: canGoBack }"
         class="text-xl text-gray-800 focus:outline-none"

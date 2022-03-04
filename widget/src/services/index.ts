@@ -1,4 +1,5 @@
 import axios from 'axios'
+import FeedbacksService from './feedbacks'
 
 type tApiEnvs = {
   [key: string]: string
@@ -28,4 +29,5 @@ httpClient.interceptors.response.use((response) => {
 })
 
 export default {
+  feedbacks: FeedbacksService(httpClient)
 }
