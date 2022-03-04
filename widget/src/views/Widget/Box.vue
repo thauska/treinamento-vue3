@@ -44,8 +44,6 @@
 <script lang="ts">
 import { defineComponent, computed, ComputedRef, SetupContext } from 'vue'
 import { brand } from '../../../palette'
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import colors from 'tailwindcss/colors'
 import useStore from '@/hooks/store'
 import Icon from '../../components/Icon/index.vue'
