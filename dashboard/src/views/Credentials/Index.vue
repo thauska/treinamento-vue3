@@ -72,7 +72,7 @@
   defer
   async
   onload="init('{{store.User.currentUser.apiKey}}')"
-  src="https://thauska-feedbacker-widget.netlify.app/init.js"
+  src="https://feedbacker-widget.thayanacmamore.dev/init.js"
 &gt;&lt;/script&gt;
         </pre>
       </div>
