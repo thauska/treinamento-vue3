@@ -4,10 +4,10 @@ function init (apiKey) {
     const fp = await window.FingerprintJS.load()
     const fingerprint = await fp.get()
 
-    const WIDGET_URL = `https://thauska-feedbacker-widget.netlify.app?api-key=${apiKey}&page=${page}&fingerprint=${fingerprint.visitorId}`
+    const WIDGET_URL = `https://feedbacker-widget.thayanacmamore.dev?api-key=${apiKey}&page=${page}&fingerprint=${fingerprint.visitorId}`
 
     const config = { method: 'HEAD' }
-    const res = await fetch(`https://backend-treinamento-vue3-steel.vercel.app/apikey/exists?apikey=${apiKey}`, config)
+    const res = await fetch(`https://feedbacker-backend.thayanacmamore.dev/apikey/exists?apikey=${apiKey}`, config)
 
     if (res.status === 200) {
       const iframe = document.createElement('iframe')
