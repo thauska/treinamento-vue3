@@ -1,4 +1,4 @@
-name: E2e testing
+name: Dashboard E2e testing
 
 on:
   workflow_dispatch:
