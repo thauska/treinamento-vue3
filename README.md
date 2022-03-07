@@ -14,3 +14,9 @@ https://feedbacker-dashboard.thayanacmamore.dev/
 ## Widget em produção:
 
 https://feedbacker-widget.thayanacmamore.dev/
+
+---
+
+## Certificado
+
+[Clique aqui para acessar o certificado](https://1drv.ms/b/s!AoO6rM9X2ARAjdQmPDKuUFQxFq86Yg)
